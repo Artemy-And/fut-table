@@ -6,12 +6,10 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 type HeaderPropsType = {
     input: string
-    setValue: Function
-
+    setValue: (value:string)=>void
 }
+
 export const Header = (props: HeaderPropsType) => {
-
-
     return <div className={styles.searcContainer}>
         <input
             value={props.input}

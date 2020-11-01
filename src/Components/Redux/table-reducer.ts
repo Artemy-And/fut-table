@@ -1,174 +1,76 @@
+import {defArr} from "../Array";
+
+
+export const SET_NEW_ARR = "SET_NEW_ARR"
+export const SET_INPUT = "SET_INPUT"
+export const SET_MODAL_IS_OPEN = "SET_MODAL_IS_OPEN"
 
 
 
-const initialState: Array<TodolistDomainType> = []
+export type initialStateType = {
+    modalIsOpen:boolean
+    input:string
+    newArr2:Array<defArrType>
+}
+export type defArrType = {
+    "id": number,
+    "name": string,
+    "sites": number,
+    "type": string,
+    "status": string
+}
 
-const slice = createSlice({
-    name: 'todolists',
-    initialState: initialState,
-    reducers: {
-        removeTodolistAC(state, action: PayloadAction<{id: string}>) {
-            // state.filter(tl => tl.id != action.payload.id)
-            //нашли индекс, а именно номер тудулиста
-            const index = state.findIndex(tl => tl.id === action.payload.id)
-            //если индекс минус один не равно минус один, т е нашелся элемент, то можем удалить из стейта сплайсом индекс 1
-            if (index > -1){
-                state.splice(index,1)
-            }
-        },
-        addTodolistAC(state, action: PayloadAction<{todolist: TodolistType}>) {
+let initialState = {
+    newArr2:defArr,
+    modalIsOpen:false,
+    input: "",
 
-            //снгачала испольховдаи метот PUSH но как оказалось она добавляет в конец
-            state.unshift({...action.payload.todolist, filter: 'all', entityStatus: 'idle'})
-        },
-        changeTodolistTitleAC(state, action: PayloadAction<{id: string, title: string}>) {
-            //нашли индекс, а именно номер тудулиста
-            const index = state.findIndex(tl => tl.id === action.payload.id)
-            state[index].title=action.payload.title
-            // let todolistTasks = state.find(tl => tl.id === action.payload.id)
-            // if (todolistTasks){
-            //     todolistTasks.title = action.payload.title
-            // }
-        },
-        changeTodolistFilterAC(state, action: PayloadAction<{filter: FilterValuesType, id: string}>) {
-            const index = state.findIndex(tl => tl.id === action.payload.id)
-            state[index].filter=action.payload.filter
-        },
-        setTodilistAC(state, action: PayloadAction<{todoList: Array<TodolistType>}>) {
-            return action.payload.todoList.map((tl: any) => {
-                return {...tl, filter: "all", entityStatus: 'idle'}
-            })
-        },
-        changeTodilistEntitiyStatusAC(state, action: PayloadAction<{id: string, entityStatus: RequestStatusType}>) {
-            const index = state.findIndex(tl => tl.id === action.payload.id)
-            state[index].entityStatus=action.payload.entityStatus
-        },
-
-    }
-})
+}
 
 
-export const todolistsReducer = slice.reducer
-// (state: Array<TodolistDomainType> = initialState, action: ActionTypes): Array<TodolistDomainType> => {
-//     switch (action.type) {
-//
-//         case "REMOVE-TODOLIST": {
-//             return state.filter(tl => tl.id != action.id);
-//         }
-//         case  "ADD-TODOLIST": {
-//             const newTodoList: TodolistDomainType = {...action.todolist, filter: 'all', entityStatus: 'idle'}
-//             return [newTodoList, ...state]
-// //         }
-//         case 'CHANGE-TODOLIST-TITLE': {
-//             debugger
-//             let todolistTasks = state.find(tl => tl.id === action.id)
-//             if (todolistTasks) {
-//                 todolistTasks.title = action.title;
-//             }
-//             return [...state]
-//         }
-//         case 'CHANGE-TODOLIST-FILTER': {
-//             return state.map(tl => tl.id === action.id ? {...tl, filter: action.filter} : tl)
-//         }
-//         case "CHANGE-TODOLIST-ENTITY-STATUS":
-//             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
-//
-//         case "SET-TODOLIST": {
-//             return action.todoList.map((tl: any) => {
-//                 return {...tl, filter: "all", entityStatus: 'idle'}
-//             })
-//         }
-//
-//
-//         default:
-//             return state
-//     }
-// }
-
-// actions
-
-export const removeTodolistAC = slice.actions.removeTodolistAC
-export const addTodolistAC = slice.actions.addTodolistAC
-export const changeTodolistTitleAC = slice.actions.changeTodolistTitleAC
-export const changeTodolistFilterAC = slice.actions.changeTodolistFilterAC
-export const setTodilistAC = slice.actions.setTodilistAC
-export const changeTodilistEntitiyStatusAC = slice.actions.changeTodilistEntitiyStatusAC
-
-
-
-//thunks
-export const fetchTodoListTC = () => {
-    return (dispatch: Dispatch) => {
-        dispatch(setAppStatusAC({status: "loading"}))
-        todolistAPI.getTodolist()
-            .then((res) => {
-                debugger
-                dispatch(setTodilistAC({todoList:res.data}))
-                dispatch(setAppStatusAC({status: "succeeded"}))
-
-            })
-            .catch((error) => {
-                dispatch(setAppErrorAC(error.message))
-                dispatch(setAppStatusAC({status: 'failed'}))
-            })
+export function tableReducer(state: initialStateType = initialState, action: allACTypes) {
+    switch (action.type) {
+        case SET_NEW_ARR:
+            return {...state, newArr2: action.defArr}
+        case SET_INPUT:
+        return {...state,input:action.value}
+        case SET_MODAL_IS_OPEN:
+        return {...state,modalIsOpen: action.value}
+        default:
+            return state
     }
 }
 
-export const removeTodoListTC = (todolistId: string) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setAppStatusAC({status: "loading"}))
-        dispatch(changeTodilistEntitiyStatusAC({id:todolistId, entityStatus:'loading'}))
+export const setNewArrAC = (defArr:Array<defArrType>): setNewArrACType => ({type: SET_NEW_ARR,defArr})
+export const setInputAC = (value:string): setInputACType => ({type: SET_INPUT,value})
+export const setModalIsOpenAC = (value:boolean): setModalIsOpenACType => ({type: SET_MODAL_IS_OPEN,value})
 
-        todolistAPI.deleteTodolist(todolistId)
-            .then((res) => {
-                dispatch(removeTodolistAC({id:todolistId}))
-                dispatch(setAppStatusAC({status: "succeeded"}))
-            })
-    }
+
+
+type setNewArrACType = {
+    type: typeof SET_NEW_ARR
+    defArr:Array<defArrType>
 }
-
-export const addTodoListTC = (title: string) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setAppStatusAC({status: 'loading'}))
-        todolistAPI.createTodolist(title)
-            .then((res) => {
-                debugger
-                dispatch(addTodolistAC({todolist:res.data.data.item}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-            })
-    }
+type setInputACType = {
+    type: typeof SET_INPUT
+    value:string
 }
-
-export const changeTodolistTC = (todolistId: string, title: string) => {
-    debugger
-    return (dispatch: Dispatch) => {
-        todolistAPI.updateTodolist(todolistId, title)
-            .then((res) => {
-                dispatch(changeTodolistTitleAC({id:todolistId, title:title}))
-            })
-    }
+type setModalIsOpenACType = {
+    type: typeof SET_MODAL_IS_OPEN
+    value:boolean
 }
-
-// types
-
-export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-export type SetTodolistActionType = ReturnType<typeof setTodilistAC>
-// type ActionTypes =
-//     ReturnType<typeof RemoveTodolistAC>
-//     | ReturnType<typeof addTodolistAC>
-//     | ReturnType<typeof changeTodolistAC>
-//     | ReturnType<typeof changeTodolistFilterAC>
-//     | ReturnType<typeof setTodilistAC>
-//     // |   ReturnType<typeof setAppStatusAC>
-//     // |   ReturnType<typeof setAppErrorAC>
-//     | ReturnType<typeof changeTodilistEntitiyStatusAC>
+type allACTypes =
+    | setNewArrACType
+|setInputACType
+|setModalIsOpenACType
 
 
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistDomainType = TodolistType & {
-    filter: FilterValuesType
-    entityStatus: RequestStatusType
-}
-// type ThunkDispatchType = Dispatch<ActionTypes | setAppStatusActionType>
+
+
+
+
+
+
+
 
 

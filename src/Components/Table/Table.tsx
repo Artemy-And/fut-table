@@ -1,117 +1,61 @@
-import React, {useState} from "react";
+import React from "react";
 import style from './Table.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock} from "@fortawesome/free-solid-svg-icons";
-import styles from "./Header.module.css";
-import {Header} from "./Header";
+import styles from "../Header/Header.module.css";
+import {Header} from "../Header/Header";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../Redux/Store";
+import {defArrType, setInputAC, setModalIsOpenAC, setNewArrAC} from "../Redux/table-reducer";
+import {defArr} from "../Array";
 
 
 
-let defArr = [
-    {
-        "id": 1,
-        "name": "ExpsaertSender",
-        "sites": 0,
-        "type": "email",
-        "status": "blocked"
-    },
-    {
-        "id": 2,
-        "name": "Tag Commander",
-        "sites": 0,
-        "type": "tag_manager",
-        "status": "blocked"
-    },
-    {
-        "id": 3,
-        "name": "Ysance",
-        "sites": 0,
-        "type": "dmp_crm",
-        "status": "blocked"
-    },
-    {
-        "id": 4,
-        "name": "AT Internet",
-        "sites": 1,
-        "type": "analytics",
-        "status": "enable"
-    },
-    {
-        "id": 5,
-        "name": "Content Square",
-        "sites": 3,
-        "type": "analytics",
-        "status": "enable"
-    },
-    {
-        "id": 6,
-        "name": "Google Tag Manager",
-        "sites": 2,
-        "type": "tag_manager",
-        "status": "enable"
-    },
-    {
-        "id": 7,
-        "name": "Heatmap",
-        "sites": 1,
-        "type": "heatmap",
-        "status": "enable"
-    },
-    {
-        "id": 8,
-        "name": "Tealium",
-        "sites": 0,
-        "type": "dmp_crm",
-        "status": "disable"
-    },
-    {
-        "id": 9,
-        "name": "Emarsys",
-        "sites": 0,
-        "type": "email",
-        "status": "disable"
-    }
-]
 export const Table = () => {
-    const [modalIsOpen, setIsOpen2] = React.useState(false);
-    let [input, setInput] = useState('')
-    let [newArr, setNewArr] = useState(defArr)
+    const dispatch = useDispatch()
+  const input = useSelector<AppRootStateType, string>(state => state.table.input)
+   const newArr = useSelector<AppRootStateType, Array<defArrType>>(state => state.table.newArr2)
+  const modalIsOpen = useSelector<AppRootStateType, boolean>(state => state.table.modalIsOpen)
 
     let setValue = (value:string) => {
         if (input.length > 0) {
-            setNewArr(defArr.filter((i) => {
+           dispatch(setNewArrAC(defArr.filter((i) => {
                 let matchNames = i.name.toLowerCase()
                 return matchNames.match(value)
-            }))
+            })))
         }
-        setInput(value)
+        dispatch(setInputAC(value))
         if (newArr.length === 0 && !modalIsOpen) {
-            setIsOpen2(true)
+           dispatch(setModalIsOpenAC(true))
             setTimeout(() => {
-                setIsOpen2(false)
+               dispatch(setModalIsOpenAC(false))
             }, 2000)
         }
     }
-
+    const onHandleClickASC=()=> {
+        dispatch(setNewArrAC([...newArr].sort((a, b) => {
+            return a.name === b.name ? 0:
+                a.name > b.name ? 1 : -1
+        })))
+    }
+    const onHandleClickDESC=()=>{
+        dispatch(setNewArrAC([...newArr].sort((a, b) => {
+            return a.name === b.name ? 0:
+                a.name < b.name ? 1 : -1
+        })))
+    }
 
     return (
         <div>
             <Header input={input} setValue={setValue}/>
-            {modalIsOpen ?  <div className={style.error}>введенные данные не корректны</div> :''}
+            {modalIsOpen ?  <div className={style.error}>Ничего не найдено</div> :''}
             <div className={style.newClassName}>
                 <div className={style.tableForHover}>
-                    <div className={style.myTable}>
+                    <div className={style.myTableHeader}>
                         <div className={style.box1}>
                             <p className={style.headerName}  >
                                 Tool name
-                                <span onClick={()=>setNewArr([...newArr].sort((a, b) => {
-                                    return a.name === b.name ? 0:
-                                    a.name > b.name ? 1 : -1
-                                }))}>▲</span><span onClick={()=>setNewArr([...newArr].sort((a, b) => {
-                                return a.name === b.name ? 0:
-                                    a.name < b.name ? 1 : -1
-                            }))}>▼</span></p>
-
+                                <span onClick={onHandleClickASC}>▲</span><span onClick={onHandleClickDESC}>▼</span></p>
                         </div>
                         <div className={style.box2}>
                             <p className={style.headerName}>Used on</p>
@@ -133,7 +77,7 @@ export const Table = () => {
                                     <p>{el.sites > 0 ? `${el.sites} site` : el.sites}</p>
                                 </div>
                                 <div className={style.box3}>
-                                    <p className={style.types}>{el.type}</p>
+                                    <p className={style.types}>{el.type.replace("_"," ")}</p>
                                 </div>
                                 <div className={style.box4}>
                                     {(el.status === 'disable' && <button className={style.buttonOff}>OFF</button>) ||
