@@ -1,0 +1,82 @@
+.headerName{
+    color: #31A485;
+    font-family: 'Roboto', sans-serif;
+font-style: italic;
+}
+
+.myTable{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    box-sizing: border-box;
+    color: #8B8B8B;
+}
+
+.myTable:hover{
+    box-shadow: 0 0 16px 3px #cccccc;
+    opacity: 80%;
+    background-color:#334452 ;
+}
+.newClassName{
+    background-color: gainsboro;
+}
+.myTable div{
+    padding: 5px;
+    border-bottom: 1px solid gainsboro;
+    background-color: white;
+}
+.types{
+    color: orange;
+}
+.error{
+    color: red;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 10px;
+}
+.box1{
+    display: flex;
+    align-items: start;
+    flex: 5;
+}
+.box2{
+    flex: 1;
+}
+.box3{
+    flex: 1;
+}
+.box4{
+    flex: 1;
+    display: flex;
+    /*text-align: center;*/
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.buttonOff{
+    background-color: #8B8B8B;
+    width: 65px;
+    height: 20px;
+color: floralwhite;
+    font-family: Roboto;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 100px;
+
+
+
+
+
+}
+.buttonOn{
+    background-color: #31A485;
+    width: 65px;
+    height: 20px;
+    color: floralwhite;
+    font-family: Roboto;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 100px;
+}
