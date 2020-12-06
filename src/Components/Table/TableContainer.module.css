@@ -1,0 +1,29 @@
+.App {
+    text-align: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+
+
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+.newContainer{
+    background-color: #FAFAFA;
+    padding: 5px 10px 10px 10px;
+}
+
+.info{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+.info Button{
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+}
+

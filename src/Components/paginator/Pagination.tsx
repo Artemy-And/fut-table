@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import style from './Pagination.module.css'
+import {Button} from "@material-ui/core";
 
 type PaginatorPropsType = {
     postsPerPage: number
     totalPosts: number
-    paginate: (pageNumber:number)=>void
+    paginate: (pageNumber: number) => void
 }
 
 export const Paginator = (props: PaginatorPropsType) => {
@@ -19,21 +20,21 @@ export const Paginator = (props: PaginatorPropsType) => {
     return (
         <nav>
             <ul className='pagination'>
-                {portionNumber > 1 && <button onClick={() => {
+                {portionNumber > 1 && <Button color="primary" onClick={() => {
                     setPortionNumber(portionNumber - 1)
-                }}>Prev</button>}
+                }}>Prev</Button>}
                 {pageNumbers.filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
                     .map(number => (
                         <span key={number} className="page-item">
-            <a onClick={() => props.paginate(number)} href="!#" className={style.page}>
+            <a onClick={() => props.paginate(number)} className={style.page}>
                 {number}
             </a>
         </span>
                     ))}
-                {portionCount > portionNumber &&
-                <button onClick={() => {
+                {(portionCount > portionNumber && portionCount > 10) &&
+                <Button color="primary" onClick={() => {
                     setPortionNumber(portionNumber + 1)
-                }}>Next</button>
+                }}>Next</Button>
                 }
 
             </ul>

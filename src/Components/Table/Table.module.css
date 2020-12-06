@@ -10,8 +10,6 @@
     margin-right: 15px;
     height: 50px;
     padding: 5px;
-
-
 }
 .myTable{
     margin-left: 15px;
@@ -46,7 +44,7 @@
 .box1{
     display: flex;
     align-items: start;
-    flex: 5;
+    flex: 1;
 }
 .box2{
     flex: 1;
@@ -60,7 +58,13 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
-
+}
+.box5{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 .buttonOff{
     background-color: #8B8B8B;
@@ -82,3 +86,11 @@ color: floralwhite;
     border: none;
     border-radius: 100px;
 }
+.errorEmail{
+    color: red;
+    padding-left: 15px;
+}
+.btn{
+    width: 200px;
+}
+

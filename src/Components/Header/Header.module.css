@@ -14,5 +14,7 @@ input{
     position: absolute;
     font-family: 'Roboto', sans-serif;
     padding: 10px;
-
+}
+.preloader{
+    padding: 10px;
 }
