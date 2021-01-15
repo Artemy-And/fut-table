@@ -2,9 +2,9 @@ import React from "react";
 import Modal from "react-modal";
 import styles from "../../Header/Header.module.css";
 import Grid from "@material-ui/core/Grid/Grid";
-import {Button, createStyles, FormControl, FormGroup, TextField, Theme} from "@material-ui/core";
+import {Button, createStyles,Theme} from "@material-ui/core";
 import style from "../Table.module.css";
-import {setModalForNewContactAC} from "../../Redux/table-reducer";
+
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useDispatch} from "react-redux";
 import {FormikContextType} from "formik";
@@ -43,8 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type ModalNewContactPropsType = {
-    modalForNewContact:boolean
-    formik:FormikContextType<valuesPropsFormikType>
+
+    setShowAdditionalInfo: (value: boolean) => void
+    infoAboutFilm:any
+    showAdditionalInfo:boolean
 }
 
 export const ModalNewContact=(props:ModalNewContactPropsType)=>{
@@ -52,60 +54,21 @@ export const ModalNewContact=(props:ModalNewContactPropsType)=>{
     const classes = useStyles();
     return(
         <Modal
-            isOpen={props.modalForNewContact}
+            isOpen={props.showAdditionalInfo}
             style={customStyles}
             contentLabel="Example Modal"
         >
             <div className={styles.info}>
                 <Grid container justify="center">
                     <Grid item xs={4}>
-                        <form onSubmit={props.formik.handleSubmit} className={classes.root} noValidate autoComplete="off" >
-                            <FormControl>
-                                <FormGroup>
-                                    <TextField
-                                        id="standard-basic"
-                                        variant="outlined"
-                                        label="firstName"
-                                        type="firstName"
-                                        margin="normal"
-                                        {...props.formik.getFieldProps('firstName')}
-                                    />
-                                    <TextField
-                                        type="lastName"
-                                        variant="outlined"
-                                        label="lastName"
-                                        margin="normal"
-                                        {...props.formik.getFieldProps('lastName')}
-                                    />
-                                    <TextField
-                                        type="email"
-                                        variant="outlined"
-                                        label="email"
-                                        margin="normal"
-                                        {...props.formik.getFieldProps('email')}
-                                    />
-                                    {props.formik.errors.email ? <div className={style.errorEmail}>{props.formik.errors.email}</div> : null}
-                                    <TextField
-                                        type="phone"
-                                        variant="outlined"
-                                        label="phone"
-                                        margin="normal"
-                                        {...props.formik.getFieldProps('phone')}
-                                    />
-                                    {/*{formik.errors.phone ? <div>{formik.errors.phone}</div> : null}*/}
-                                    <br></br>
-                                    <Button className={classes.buttons} disabled={
-                                        props.formik.values.firstName.length>0 &&
-                                        props.formik.values.lastName.length>0  &&
-                                        props.formik.values.email.length>0 &&
-                                        props.formik.values.phone.length>0 ? false :true
-                                    } type={'submit'} variant={'contained'} color={'primary'}>Добавить</Button>
+                        <div>
+                            Description of film <b>{props.infoAboutFilm}</b>
+                        </div>
                                     <Button
-                                        onClick={()=>{dispatch(setModalForNewContactAC(false))}}
+                                        onClick={()=>{props.setShowAdditionalInfo(false)}}
                                         className={classes.buttons}  variant={'contained'} color={'secondary'}>Назад</Button>
-                                </FormGroup>
-                            </FormControl>
-                        </form>
+
+
                     </Grid>
                 </Grid>
 
