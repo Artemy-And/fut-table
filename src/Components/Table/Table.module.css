@@ -3,6 +3,11 @@
     font-family: 'Roboto', sans-serif;
     font-style: italic;
 }
+.sorting{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 .myTableHeader{
     display: flex;
     border-bottom: 1px solid gainsboro;
@@ -16,7 +21,7 @@
     margin-right: 15px;
     display: flex;
     color: #8B8B8B;
-    height:60px;
+    /*height:60px;*/
 }
 
 
@@ -24,6 +29,9 @@
     box-shadow: 0 0 16px 3px #cccccc;
     opacity: 80%;
     background-color:#334452 ;
+}
+.favoirite{
+    font-size: 21px;
 }
 .newClassName{
     background-color: white;
@@ -48,8 +56,12 @@
 }
 .box2{
     flex: 1;
+    display: flex;
+    align-items: center;
 }
 .box3{
+    display: flex;
+    align-items: center;
     flex: 1;
 }
 .box4{
@@ -70,7 +82,7 @@
     background-color: #8B8B8B;
     width: 65px;
     height: 20px;
-color: floralwhite;
+    color: floralwhite;
     text-decoration: none;
     outline: none;
     border: none;
@@ -86,11 +98,26 @@ color: floralwhite;
     border: none;
     border-radius: 100px;
 }
-.errorEmail{
-    color: red;
-    padding-left: 15px;
+
+
+
+@media screen and (max-width: 550px){
+    .sorting{
+        display: flex;
+        flex-direction: column;
+    }
+    .myTableHeader{
+        display: none;
+    }
+    .myTable{
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+
+    }
+
 }
-.btn{
-    width: 200px;
-}
+
 

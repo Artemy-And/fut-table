@@ -2,13 +2,9 @@ import React from "react";
 import Modal from "react-modal";
 import styles from "../../Header/Header.module.css";
 import Grid from "@material-ui/core/Grid/Grid";
-import {Button, createStyles,Theme} from "@material-ui/core";
-import style from "../Table.module.css";
-
+import {Button, createStyles, Theme} from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import {useDispatch} from "react-redux";
-import {FormikContextType} from "formik";
-import {valuesPropsFormikType} from "../TableContainer";
+
 
 const customStyles = {
     content: {
@@ -33,8 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 width: '25ch',
             },
         },
-        buttons:{
-
+        buttons: {
             margin: theme.spacing(1),
             width: '32ch',
 
@@ -45,14 +40,14 @@ const useStyles = makeStyles((theme: Theme) =>
 type ModalNewContactPropsType = {
 
     setShowAdditionalInfo: (value: boolean) => void
-    infoAboutFilm:any
-    showAdditionalInfo:boolean
+    infoAboutFilm: any
+    showAdditionalInfo: boolean
 }
 
-export const ModalNewContact=(props:ModalNewContactPropsType)=>{
-    const dispatch = useDispatch()
+export const ModalFilmInfo = (props: ModalNewContactPropsType) => {
+
     const classes = useStyles();
-    return(
+    return (
         <Modal
             isOpen={props.showAdditionalInfo}
             style={customStyles}
@@ -64,9 +59,11 @@ export const ModalNewContact=(props:ModalNewContactPropsType)=>{
                         <div>
                             Description of film <b>{props.infoAboutFilm}</b>
                         </div>
-                                    <Button
-                                        onClick={()=>{props.setShowAdditionalInfo(false)}}
-                                        className={classes.buttons}  variant={'contained'} color={'secondary'}>Назад</Button>
+                        <Button
+                            onClick={() => {
+                                props.setShowAdditionalInfo(false)
+                            }}
+                            className={classes.buttons} variant={'contained'} color={'secondary'}>Назад</Button>
 
 
                     </Grid>
